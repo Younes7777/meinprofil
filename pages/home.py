@@ -1,398 +1,98 @@
 import dash
-from dash import html, dcc
+from dash import html, dcc, callback, Input, Output
 import dash_bootstrap_components as dbc
-
+from .berufsinhalt import berufserfahrung_inhalt
+from .Studium import Studium
+from .Programmiersprachen import Programmiersprachen
+from .ML import ML
+from .azure import azure
+from .sprachen import sprachen
 dash.register_page(__name__, path='/', order=0)
 
-# resume sample template from https://zety.com/
+
+# Layout mit Buttons und versteckten Abschnitten
 layout = html.Div([
-    html.Img(src="/assets/my.jpg", className="hero-image", style={"width": "100%", "height": "auto"}),
-    html.Br(),
-    dcc.Markdown('# Younes Iferd', style={'textAlign':'center'}),
-    dcc.Markdown('Geboren am 09. Febraur 1977 in Rabat (Marokko)', style={'textAlign':'center'}),
+    html.Div([
+        html.Img(src="/assets/my.jpg", className="hero-image", style={"width": "100%", "height": "800px", "object-fit": "cover", "position": "relative"}),
+            html.Div("Younes Iferd", style={
+                "position": "absolute", 
+                "bottom": "20px",  
+                "right": "20px",  
+                "color": "white", 
+                "fontSize": "64px",  # Größere Schrift
+                "backgroundColor": "#007bff",  # Primary Blau, Standard Bootstrap Wert
+                "padding": "5px 20px",  # Mehr Platz um den Text
+                "borderRadius": "5px",
+                "fontWeight": "normal"  # Schrift ist nicht mehr fett
+            })
+    ], style={"position": "relative"}),
+
+
+    html.Div(style={"height": "20px"}),
+    
+    dcc.Markdown('Geboren am 09. Februar 1977 in Rabat (Marokko)', style={'textAlign': 'center'}),
     dcc.Markdown('Verheiratet und Vater eines achtjährigen Sohnes', style={'textAlign': 'center'}),
     
-
-    dcc.Markdown('### Kurzprofil', style={'textAlign': 'center'}),
+    
     html.Hr(),
     dcc.Markdown('Leidenschaftlicher Data Analyst mit Erfahrung in der statistischen und ökonometrischen Datenanalyse. \n'
                  'Versiert in diversen Programmiersprachen und analytischen Methoden. Ein hilfsbereiter Teamplayer \n'
                  'mit einem lösungsorientierten Ansatz zur Dateninterpretation und Entscheidungsfindung.',
-                 style={'textAlign': 'center', 'white-space': 'pre'}),
+                 style={'textAlign': 'left'}),
 
-    dcc.Markdown('### Berufserfahrung', style={'textAlign': 'center'}),
-    html.Hr(),
+    # Buttons zur Steuerung
+    html.Div([
+        dbc.Button("Berufserfahrung", id="btn-beruf", color="primary", className="flex-grow-1"),
+        dbc.Button("Studium", id="btn-studium", color="primary", className="flex-grow-1"),
+        dbc.Button("Programmiersprachen", id="btn-it", color="primary", className="flex-grow-1"),
+        dbc.Button("Machine Learning", id="btn-ml", color="primary", className="flex-grow-1"),
+        dbc.Button("Microsoft Azure", id="btn-azure", color="primary", className="flex-grow-1"),
+        dbc.Button("Sprachen", id="btn-sprachen", color="primary", className="flex-grow-1"),
+    ], style={"display": "flex", "width": "100%", "gap": "10px", "marginBottom": "20px"}),
 
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('02/2022 - 09/2024', style={'textAlign': 'center'})
-        ], width=2),
-        dbc.Col([
-            dcc.Markdown('IT Data Analyst \n'
-                         'Deutsche Giganetz GmbH, Hamburg',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            html.Ul([
-                html.Li('Zuverlässige Entwicklung von Anwendungen und Tools unter Verwendung vonPython (Dash) und R (Shiny)'),
-                html.Li('Ad-Hoc SQL-Analysen'),
-                html.Li('Machine Learning-Implimentierung und Evaluation in Python-scikit-learn'),
-                
-            ])
-        ], width=5)
-    ], justify='center'),
+    # Speicher für die Sichtbarkeit
+    dcc.Store(id='visible-section', data={}),
 
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('06/2018 to 12/2021',
-                         style={'textAlign': 'center'})
-        ], width=2),
-        dbc.Col([
-            dcc.Markdown('Data Analyst \n'
-                         'BetoCall, Marrakesch (Marokko)',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            html.Ul([
-                html.Li(
-                    'Datenextraktion und-aufbereitung aus verschiedenen Quellen'),
-                html.Li(
-                    'Anwendung von statistischen Methoden zur Identifikation von Trends, Mustern und Zusammenhängen in den Daten'),
-            ])
-        ], width=5)
-    ], justify='center'),
+    # Inhalte der Abschnitte
+    html.Div(id='content-section'),
 
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('05/2020 to 08/2020',
-                         style={'textAlign': 'center'})
-        ], width=2),
-        dbc.Col([
-            dcc.Markdown('Traine Data Science (remote) \n'
-                         'neuefische GmbH, Hamburg',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            html.Ul([
-                html.Li(
-                    'Intensive-Coding-Bootcamp in Vollzeit (540 Stunden)'),
-                html.Li(
-                    'Fundierte Programmierpraxis in Python mit Eigenentwicklung eines Projektes als Abschlussarbeit (digitales Gesellenstück) sowie 2 weiteren Machine Learning-Projekten'),
-               
-            ])
-        ], width=5)
-    ], justify='center'),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('07/2013 - 05/2018', style={'textAlign': 'center'})
-        ], width=2),
-        dbc.Col([
-            dcc.Markdown('Wissenschaftlicher Mitarbeiter \n'
-                         'Das Fraunhofer-Institut für System- und Innovationsforschung ISI',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            html.Ul([
-                html.Li('Eigenständige Aufbereitung wissenschaftlicher Daten sowie Programmierung in Stata, R und SPSS'),
-                html.Li('Statistische und ökonometrische Datenanalyse'),
-                html.Li('Verfassen von Projektberichten und Publikationen'),
-                
-            ])
-        ], width=5)
-    ], justify='center'),
-
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('01/2012 to 05/2013',
-                         style={'textAlign': 'center'})
-        ], width=2),
-        dbc.Col([
-            dcc.Markdown('Mitarbeiter im Bereich der statistischen Datenanalyse und Prognose \n'
-                         'Analytix GmbH, Kiel',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            html.Ul([
-                html.Li(
-                    'Gewissenhafte Aufbereitung wissenschaftlicher Daten sowie Programmierung in SPSS und VBA'),
-                html.Li(
-                    'Ökonometrische Analyse von Querschnitts- und Paneldatenn mit dem Ziel, Prognosen für die Fachkräfteentwicklung zu erstellen'),
-               
-            ])
-        ], width=5)
-    ], justify='center'),
-
-    dcc.Markdown('### Studium', style={'textAlign': 'center'}),
-    html.Hr(),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('10/2003 – 12/2011',
-                         style={'textAlign': 'center'})
-        ], width=2),
-        dbc.Col([
-            dcc.Markdown('Studium der Volkswirtschaftslehre mit Schwerpunkt Quantitative Wirtschaftsforschung und Nebenfach Wirtschaftsinformatik\n'
-                         'Christian-Albrechts-Universität zu Kiel, Kiel',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-        ], width=5)
-    ], justify='center'),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('01/1997 – 06/2001',
-                         style={'textAlign': 'center'})
-        ], width=2),
-        dbc.Col([
-            dcc.Markdown('Studium der Wirtschaftswissenschaften mit Schwerpunkt Betriebswirtschaft\n'
-                         'Christian-Albrechts-Universität zu Kiel, Kiel',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-        ], width=5)
-    ], justify='center'),
-
-
-    dcc.Markdown('### IT-Kenntnisse', style={'textAlign': 'center'}),
-    html.Hr(),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('Python', style={'textAlign': 'center'})
-        ], width=2),
-    
-        dbc.Col([
-            dcc.Markdown('Sehr gute Kenntnisse',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            
-        ], width=5),
-
-        
-
-    ], justify='center'),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('R', style={'textAlign': 'center'})
-        ], width=2),
-    
-        dbc.Col([
-            dcc.Markdown('Gute Kenntnisse',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            
-        ], width=5),
-
-        
-
-    ], justify='center'),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('SQL', style={'textAlign': 'center'})
-        ], width=2),
-    
-        dbc.Col([
-            dcc.Markdown('Sehr gute Kenntnisse',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            
-        ], width=5),
-
-        
-
-    ], justify='center'),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('SPSS', style={'textAlign': 'center'})
-        ], width=2),
-    
-        dbc.Col([
-            dcc.Markdown('Sehr guze Kenntnisse',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            
-        ], width=5),
-
-        
-
-    ], justify='center'),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('Stata', style={'textAlign': 'center'})
-        ], width=2),
-    
-        dbc.Col([
-            dcc.Markdown('Gute Kenntnisse',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            
-        ], width=5),
-
-        
-
-    ], justify='center'),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('MS Office', style={'textAlign': 'center'})
-        ], width=2),
-    
-        dbc.Col([
-            dcc.Markdown('Gute Kenntnisse',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            
-        ], width=5),
-
-        
-
-    ], justify='center'),
-
-
-    dcc.Markdown('### Machine Learning-Algorithmen mit Python-Scikit-learn', style={'textAlign': 'center'}),
-    html.Hr(),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('Supervised Learning',
-                         style={'textAlign': 'center'})
-        ], width=2),
-        dbc.Col([
-            dcc.Markdown('',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            html.Ul([
-                html.Li(
-                    'Lineare Regression'),
-                html.Li(
-                    'Entscheidungsbäume'),
-                html.Li(
-                    'Random Forest'),
-                html.Li(
-                    'XGBoost'), 
-                html.Li(
-                'Catboost'),    
-              
-            ])
-        ], width=5)
-    ], justify='center'),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('Unsupervised Learning',
-                         style={'textAlign': 'center'})
-        ], width=2),
-        dbc.Col([
-            dcc.Markdown('',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            html.Ul([
-                html.Li(
-                    'K-Means Clustering'),
-                html.Li(
-                    'Hierarchisches Clustering'),
-                html.Li(
-                    'Principal Component Analysis (PCA)'),
-                  
-              
-            ])
-        ], width=5)
-    ], justify='center'),
-
-
-
-    dcc.Markdown('### Microsoft Azure', style={'textAlign': 'center'}),
-    html.Hr(),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('Cloud-Datenlösungen und Automatisierung',
-                         style={'textAlign': 'center'})
-        ], width=2),
-        dbc.Col([
-            dcc.Markdown('',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            html.Ul([
-                html.Li(
-                    'Azure Blob Storage'),
-                html.Li(
-                    'Azure Functions (Python)'),
-                html.Li(
-                    'Azure Data Factory'),
-                    html.Li(
-                    'Azure Logic Apps'),
-                  
-              
-            ])
-        ], width=5)
-    ], justify='center'),
-
-    dcc.Markdown('### Sprachen', style={'textAlign': 'center'}),
-    html.Hr(),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('Deutsch', style={'textAlign': 'center'})
-        ], width=2),
-    
-        dbc.Col([
-            dcc.Markdown('Fließend in Wort und Schrift',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            
-        ], width=5),
-
-        
-
-    ], justify='center'),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('Arabisch', style={'textAlign': 'center'})
-        ], width=2),
-    
-        dbc.Col([
-            dcc.Markdown('Muttersprache',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            
-        ], width=5),
-
-        
-
-    ], justify='center'),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('Englisch', style={'textAlign': 'center'})
-        ], width=2),
-    
-        dbc.Col([
-            dcc.Markdown('Gut',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            
-        ], width=5),
-
-        
-
-    ], justify='center'),
-
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('Französisch', style={'textAlign': 'center'})
-        ], width=2),
-    
-        dbc.Col([
-            dcc.Markdown('Verhandlungssicher',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            
-        ], width=5),
-
-        
-
-    ], justify='center'),
-
+    # Script zum Scrollen zum spezifischen Abschnitt
+    html.Script('''
+        function scrollToSection() {
+            let contentSection = document.querySelector('#content-section');
+            if (contentSection) {
+                contentSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    ''')
 ])
+
+@callback(
+    Output('content-section', 'children'),
+    [Input('btn-beruf', 'n_clicks'),
+     Input('btn-studium', 'n_clicks'),
+     Input('btn-it', 'n_clicks'),
+     Input('btn-ml', 'n_clicks'),
+     Input('btn-azure', 'n_clicks'),
+     Input('btn-sprachen', 'n_clicks')]
+)
+def update_content(n_beruf, n_studium, n_it, n_ml, n_azure, n_sprachen):
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        return ""  # Keine Sektion initial sichtbar
+    
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    
+    sections = {
+        "btn-beruf": html.Div(berufserfahrung_inhalt, id="content-beruf", className="content-section"),
+        "btn-studium": html.Div(Studium, id="content-studium", className="content-section"),
+        "btn-it": html.Div(Programmiersprachen, id="content-it", className="content-section"),
+        "btn-ml": html.Div(ML, id="content-ml", className="content-section"),
+        "btn-azure": html.Div(azure, id="content-azure", className="content-section"),
+        "btn-sprachen": html.Div(sprachen, id="content-sprachen", className="content-section")
+    }
+    
+    # Scrollen auslösen
+    html.Script('scrollToSection();')
+
+    return sections.get(button_id, "")

@@ -3,47 +3,52 @@ from dash import Dash, html
 import dash_bootstrap_components as dbc
 import os
 
+# Initialisiere die Dash-App
 app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.CERULEAN])
 
+# Importiere Seiten (z.B. Projekte-Seite)
+from pages import projekte
+
+# Layout für die App definieren
 header = dbc.Navbar(
     dbc.Container(
         [
-            dbc.Row(
+            dbc.Nav(
                 [
-                    dbc.Col(
-                        dbc.Nav(
-                            [
-                                dbc.NavLink(page["name"], href=page["path"], style={"color": "white"})
-                                for page in dash.page_registry.values()
-                                if not page["path"].startswith("/app") 
-                                and not page["path"].startswith("/berufsinhalt") 
-                                and not page["path"].startswith("/Studium") 
-                                and not page["path"].startswith("/Programmiersprachen") 
-                                and not page["path"].startswith("/ML") 
-                                and not page["path"].startswith("/azure")
-                            ],
-                            navbar=True,
-                            style={"display": "flex", "justify-content": "space-between", "width": "100%"}  # Flexbox für gleichmäßige Verteilung
-                        ),
-                        width=12,  # Die ganze Zeile nutzen
-                    ),
+                    dbc.NavLink(
+                        page["name"], 
+                        href=page["path"], 
+                        style={
+                            "color": "white", 
+                            "padding": "10px 15px",  # Abstand innerhalb der Links
+                            "text-decoration": "none",  
+                            "font-weight": "bold"
+                        }
+                    )
+                    for page in dash.page_registry.values()
+                    if not page["path"].startswith("/app")
                 ],
-                justify="start",  # Alle Spalten links ausrichten
-                align="center",  # Vertikale Zentrierung
+                navbar=True,
+                style={
+                    "display": "flex",
+                    "justify-content": "center",  # Zentrierung der Links
+                    "align-items": "center",
+                    "gap": "20px",  # Abstand zwischen Links
+                    "padding": "10px 0",
+                    "list-style": "none"
+                }
             ),
         ],
         fluid=True,
     ),
+    color="#0b5ed7",  # Hintergrundfarbe
     dark=True,
-    color='primary'
+    style={"marginBottom": "10px"}
 )
 
+# Layout der gesamten App
+app.layout = dbc.Container([header, dash.page_container], fluid=True)
 
-
-
-app.layout = dbc.Container([header, dash.page_container], fluid=False)
-
+# Starte den Server
 if __name__ == "__main__":
     app.run_server(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))
-
-

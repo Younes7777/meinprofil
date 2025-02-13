@@ -5,7 +5,7 @@ import dash_bootstrap_components as dbc
 sprachen= [
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('Deutsch', style={'textAlign': 'center'})
+            dcc.Markdown('**Deutsch**', style={'textAlign': 'center'})
         ], width=2),
     
         dbc.Col([
@@ -21,7 +21,7 @@ sprachen= [
 
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('Arabisch', style={'textAlign': 'center'})
+            dcc.Markdown('**Arabisch**', style={'textAlign': 'center'})
         ], width=2),
     
         dbc.Col([
@@ -37,7 +37,7 @@ sprachen= [
 
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('Englisch', style={'textAlign': 'center'})
+            dcc.Markdown('**Englisch**', style={'textAlign': 'center'})
         ], width=2),
     
         dbc.Col([
@@ -53,7 +53,7 @@ sprachen= [
 
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('Französisch', style={'textAlign': 'center'})
+            dcc.Markdown('**Französisch**', style={'textAlign': 'center'})
         ], width=2),
     
         dbc.Col([

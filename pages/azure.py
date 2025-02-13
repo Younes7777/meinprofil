@@ -5,7 +5,7 @@ import dash_bootstrap_components as dbc
 azure = [
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('Cloud-Datenlösungen und Automatisierung',
+            dcc.Markdown('**Cloud-Datenlösungen und Automatisierung**',
                          style={'textAlign': 'center'})
         ], width=2),
         dbc.Col([

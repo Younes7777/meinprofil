@@ -7,40 +7,81 @@ from .Programmiersprachen import Programmiersprachen
 from .ML import ML
 from .azure import azure
 from .sprachen import sprachen
+import os
 dash.register_page(__name__, path='/', order=0)
 
 
 # Layout mit Buttons und versteckten Abschnitten
 layout = html.Div([
     html.Div([
-        html.Img(src="/assets/my.jpg", className="hero-image", style={"width": "100%", "height": "800px", "object-fit": "cover", "position": "relative"}),
-            html.Div("Younes Iferd", style={
-                "position": "absolute", 
-                "bottom": "20px",  
-                "right": "20px",  
-                "color": "white", 
-                "fontSize": "64px",  # Größere Schrift
-                "backgroundColor": "#007bff",  # Primary Blau, Standard Bootstrap Wert
-                "padding": "5px 20px",  # Mehr Platz um den Text
-                "borderRadius": "5px",
-                "fontWeight": "normal"  # Schrift ist nicht mehr fett
-            })
+        dbc.Row([
+        # Linke Spalte - Neue Profil Card
+        dbc.Col([
+            dbc.Card(
+                dbc.Row([
+                    # Linke Spalte - Profilbild
+                    dbc.Col(
+                        dbc.CardImg(
+                            src="/assets/my.jpg",
+                            className="img-fluid rounded-start h-100",  # Höhe 100%
+                            style={"object-fit": "cover"}  # Passt das Bild perfekt an
+                        ),
+                        className="col-md-4 h-100",
+                    ),
+                    # Rechte Spalte - Name & Profiltext
+                    dbc.Col(
+                        dbc.CardBody([
+                            html.H4("Younes Iferd", className="card-title text-primary fw-bold"),
+                           html.P(
+                                "Leidenschaftlicher Data Analyst mit umfassender Erfahrung in der statistischen und ökonometrischen Analyse. "
+                                "Versiert in Python, R, SQL und Machine Learning, entwickle ich datenbasierte Anwendungen und Dashboards, die fundierte Entscheidungen ermöglichen. "
+                                "Aktuell erweitere ich meine Expertise im Bereich Power BI und Microsoft Azure. "
+                                "Als lösungsorientierter Teamplayer strebe ich stets nach Innovation und Effizienz in der Datenverarbeitung.",
+                                className="card-text"
+                            ),
+                        ]),
+                        className="col-md-8",
+                    ),
+                ], className="g-0 d-flex align-items-stretch"),  # Gleicht Höhen an
+                className="shadow border-0 p-3 mb-3 h-100 d-flex flex-column",
+                style={"maxWidth": "100%"},
+            )
+        ], md=6, className="d-flex"),  # Spalte bleibt gleich hoch
+
+        # Rechte Spalte - Persönliche Infos Card
+        dbc.Col([
+            dbc.Card(
+                dbc.CardBody([
+                    html.H4("Über mich", className="card-title text-primary fw-bold"),
+                    html.Ul([
+                        html.Li(children=[html.Strong("📅 Geboren am: "), "09. Febraur 1977 in Rabat (Marokko)"]),
+                        html.Li(children=[html.Strong("📞 Telefon: "), "+49 1799487602"]),
+                        html.Li(children=[html.Strong("✉️ E-Mail: "), "yiferd@yahoo.fr"]),
+                        html.Li(children=[html.Strong("💼 GitHub: "), html.A("github.com/Younes7777", href="https://github.com/Younes7777", target="_blank")]),
+                        
+                    ], className="list-unstyled fs-5")
+                ]),
+                className="shadow border-0 p-3 d-flex flex-column h-100"
+            )
+        ], md=6, className="d-flex")  # Stellt sicher, dass die Spalte sich dehnt
+
+    ], className="mt-5 justify-content-center align-items-stretch")  # Sorgt für gleiche Höhe der Cards  # Sorgt für gleiche Höhe der Cards
     ], style={"position": "relative"}),
 
+    html.Hr(),
 
-    html.Div(style={"height": "20px"}),
-    
-    dcc.Markdown('Geboren am 09. Februar 1977 in Rabat (Marokko)', style={'textAlign': 'center'}),
-    dcc.Markdown('Verheiratet und Vater eines achtjährigen Sohnes', style={'textAlign': 'center'}),
-    
+     html.Div([
+        dbc.Button(
+            "Lebenslauf herunterladen",
+            id="btn-download-pdf",
+            color="primary",
+            #style={"marginBottom": "20px"},
+        ),
+        dcc.Download(id="download-pdf")
+    ], className="d-flex justify-content-center"),
     
     html.Hr(),
-    dcc.Markdown('Leidenschaftlicher Data Analyst mit Erfahrung in der statistischen und ökonometrischen Datenanalyse. \n'
-                 'Versiert in diversen Programmiersprachen und analytischen Methoden. Ein hilfsbereiter Teamplayer \n'
-                 'mit einem lösungsorientierten Ansatz zur Dateninterpretation und Entscheidungsfindung.',
-                 style={'textAlign': 'left'}),
 
-    # Buttons zur Steuerung
     html.Div([
         dbc.Button("Berufserfahrung", id="btn-beruf", color="primary", className="flex-grow-1"),
         dbc.Button("Studium", id="btn-studium", color="primary", className="flex-grow-1"),
@@ -96,3 +137,12 @@ def update_content(n_beruf, n_studium, n_it, n_ml, n_azure, n_sprachen):
     html.Script('scrollToSection();')
 
     return sections.get(button_id, "")
+
+@dash.callback(
+    Output("download-pdf", "data"),
+    Input("btn-download-pdf", "n_clicks"),
+    prevent_initial_call=True
+)
+def download_pdf(n_clicks):
+    pdf_path = os.path.join(os.getcwd(), "assets", "Lebenslauf.pdf")  # Absoluter Pfad
+    return dcc.send_file(pdf_path)

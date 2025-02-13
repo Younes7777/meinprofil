@@ -5,7 +5,7 @@ import dash_bootstrap_components as dbc
 ML= [
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('Supervised Learning',
+            dcc.Markdown('**Supervised Learning**',
                          style={'textAlign': 'center'})
         ], width=2),
         dbc.Col([
@@ -30,7 +30,7 @@ ML= [
 
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('Unsupervised Learning',
+            dcc.Markdown('**Unsupervised Learning**',
                          style={'textAlign': 'center'})
         ], width=2),
         dbc.Col([

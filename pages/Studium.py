@@ -5,7 +5,7 @@ import dash_bootstrap_components as dbc
 Studium= [
     dbc.Row([
             dbc.Col([
-                dcc.Markdown('10/2003 – 12/2011',
+                dcc.Markdown('**10/2003 – 12/2011**',
                             style={'textAlign': 'center'})
             ], width=2),
             dbc.Col([
@@ -23,7 +23,7 @@ Studium= [
 
         dbc.Row([
             dbc.Col([
-                dcc.Markdown('01/1997 – 06/2001',
+                dcc.Markdown('**01/1997 – 06/2001**',
                             style={'textAlign': 'center'})
             ], width=2),
             dbc.Col([

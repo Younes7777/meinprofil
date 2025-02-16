@@ -19,21 +19,7 @@ sprachen= [
 
     ], justify='center'),
 
-    dbc.Row([
-        dbc.Col([
-            dcc.Markdown('**Arabisch**', style={'textAlign': 'center'})
-        ], width=2),
     
-        dbc.Col([
-            dcc.Markdown('Muttersprache',
-                         style={'white-space': 'pre'},
-                         className='ms-3'),
-            
-        ], width=5),
-
-        
-
-    ], justify='center'),
 
     dbc.Row([
         dbc.Col([
@@ -58,6 +44,21 @@ sprachen= [
     
         dbc.Col([
             dcc.Markdown('Verhandlungssicher',
+                         style={'white-space': 'pre'},
+                         className='ms-3'),
+            
+        ], width=5),
+
+        
+
+    ], justify='center'),
+    dbc.Row([
+        dbc.Col([
+            dcc.Markdown('**Arabisch**', style={'textAlign': 'center'})
+        ], width=2),
+    
+        dbc.Col([
+            dcc.Markdown('Muttersprache',
                          style={'white-space': 'pre'},
                          className='ms-3'),
             

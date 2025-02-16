@@ -33,7 +33,7 @@ Programmiersprachen= [
 
         
 
-    ], justify='left'),
+    ], justify='center'),
 
     dbc.Row([
         dbc.Col([
@@ -57,7 +57,7 @@ Programmiersprachen= [
 
         
 
-    ], justify='left'),
+    ], justify='center'),
 
     dbc.Row([
         dbc.Col([
@@ -79,7 +79,7 @@ Programmiersprachen= [
 
         
 
-    ], justify='left'),
+    ], justify='center'),
 
     
 

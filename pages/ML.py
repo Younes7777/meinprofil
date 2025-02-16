@@ -14,15 +14,13 @@ ML= [
                          className='ms-3'),
             html.Ul([
                 html.Li(
-                    'Lineare Regression'),
+                    dcc.Markdown('**Lineare Regression**: Lineare Regression, Ridge/Lasso Regression, Polynomial Regression')),
                 html.Li(
-                    'Entscheidungsbäume'),
+                    dcc.Markdown('**Baum-basierte Algorithmen**: Entscheidungsbäume, Random Forest, Gradient Boosting (XGBoost, CatBoost, LightGBM)')),
                 html.Li(
-                    'Random Forest'),
-                html.Li(
-                    'XGBoost'), 
-                html.Li(
-                'Catboost'),    
+                   dcc.Markdown('**Support Vector Machines (SVM)**')),
+                html .Li(
+                    dcc.Markdown('**Ensemble Learning**: Bagging, Boosting, Stacking')),    
               
             ])
         ], width=5)
@@ -39,14 +37,82 @@ ML= [
                          className='ms-3'),
             html.Ul([
                 html.Li(
-                    'K-Means Clustering'),
+                    dcc.Markdown('**Clustering-Algorithmen**: K-Means, Hierarchisches Clustering, DBSCAN')),
                 html.Li(
-                    'Hierarchisches Clustering'),
+                    dcc.Markdown('**Dimensionalitätsreduktion**:  Principal Component Analysis (PCA), t-SNE, UMAP')),
                 html.Li(
-                    'Principal Component Analysis (PCA)'),
+                    dcc.Markdown('Principal Component Analysis (PCA)')),
                   
               
             ])
+        ], width=5)
+    ], justify='center'),
+
+    dbc.Row([
+        dbc.Col([
+            dcc.Markdown('**Feature Engineering & Datenvorbereitung**',
+                         style={'textAlign': 'center'})
+        ], width=2),
+        dbc.Col([
+            dcc.Markdown('',
+                         style={'white-space': 'pre'},
+                         className='ms-3'),
+            html.Ul([
+                html.Li(
+                    dcc.Markdown('Skalierung (StandardScaler, MinMaxScaler)')),
+                html.Li(
+                    dcc.Markdown('One-Hot-Encoding, Label Encoding')),
+                html.Li(
+                    dcc.Markdown('Umgang mit fehlenden Werten')),
+                html.Li(
+                    dcc.Markdown('Feature Selection & Extraction')),
+            
+                  
+              
+            ])
+        ], width=5)
+    ], justify='center'),
+
+    dbc.Row([
+        dbc.Col([
+            dcc.Markdown('**Modellbewertung & Optimierung**',
+                         style={'textAlign': 'center'})
+        ], width=2),
+        dbc.Col([
+            dcc.Markdown('',
+                         style={'white-space': 'pre'},
+                         className='ms-3'),
+            html.Ul([
+                html.Li(
+                    dcc.Markdown('Kreuzvalidierung, Hyperparameter-Tuning (GridSearch, RandomizedSearch, Optuna)')),
+                html.Li(
+                    dcc.Markdown('Metriken für Klassifikation (AUC, F1-Score, Precision-Recall) & Regression (RMSE, MAE, R²)')),
+                html.Li(
+                    dcc.Markdown('Umgang mit fehlenden Werten')),
+                html.Li(
+                    dcc.Markdown('Feature Selection & Extraction')),
+            ])
+        ], width=5)
+    ], justify='center'),
+
+    dbc.Row([
+        dbc.Col([
+            dcc.Markdown('**Programmierung & Tools**',
+                         style={'textAlign': 'center'})
+        ], width=2),
+        dbc.Col([
+            dcc.Markdown('',
+                         style={'white-space': 'pre'},
+                         className='ms-3'),
+            html.Ul([
+                html.Li(
+                    dcc.Markdown('**Programmiersprachen**: Python (Pandas, NumPy, Scikit-Learn, TensorFlow, PyTorch)')),
+                html.Li(
+                    dcc.Markdown('**Datenvisualisierung**: Matplotlib, Seaborn, Plotly')),
+                
+            ])
+
+            
         ], width=5)
     ], justify='center')
 ]

@@ -33,10 +33,10 @@ layout = html.Div([
                         dbc.CardBody([
                             html.H4("Younes Iferd", className="card-title text-primary fw-bold"),
                            html.P(
-                                "Leidenschaftlicher Data Analyst mit umfassender Erfahrung in der statistischen und ökonometrischen Analyse. "
-                                "Versiert in Python, R, SQL und Machine Learning, entwickle ich datenbasierte Anwendungen und Dashboards, die fundierte Entscheidungen ermöglichen. "
-                                "Aktuell erweitere ich meine Expertise im Bereich Power BI und Microsoft Azure. "
-                                "Als lösungsorientierter Teamplayer strebe ich stets nach Innovation und Effizienz in der Datenverarbeitung.",
+                                "Leidenschaftlicher Data Analyst mit umfassender Erfahrung in der statistischen und ökonometrischen "
+                                "Datenanalyse. Versiert in Python, R, SQL und Machine Learning. Spezialisiert auf die Entwicklung interaktiver "
+                                "Dashboards (Dash, Shiny) und datengetriebene Entscheidungsfindung. Derzeit Weiterbildung in Power "
+                                "BI mit dem Ziel, die PL-300-Zertifizierung von Microsoft zu erlangen. Teamorientiert mit Erfahrung in IT- und Telekommunikationsbranchen",
                                 className="card-text"
                             ),
                         ]),
@@ -108,7 +108,7 @@ layout = html.Div([
     ''')
 ])
 
-@callback(
+@dash.callback(
     Output('content-section', 'children'),
     [Input('btn-beruf', 'n_clicks'),
      Input('btn-studium', 'n_clicks'),
@@ -120,7 +120,7 @@ layout = html.Div([
 def update_content(n_beruf, n_studium, n_it, n_ml, n_azure, n_sprachen):
     ctx = dash.callback_context
     if not ctx.triggered:
-        return ""  # Keine Sektion initial sichtbar
+        return html.Div(berufserfahrung_inhalt, id="content-beruf", className="content-section")  # Standard: Berufserfahrung
     
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     
@@ -133,9 +133,6 @@ def update_content(n_beruf, n_studium, n_it, n_ml, n_azure, n_sprachen):
         "btn-sprachen": html.Div(sprachen, id="content-sprachen", className="content-section")
     }
     
-    # Scrollen auslösen
-    html.Script('scrollToSection();')
-
     return sections.get(button_id, "")
 
 @dash.callback(
@@ -146,3 +143,5 @@ def update_content(n_beruf, n_studium, n_it, n_ml, n_azure, n_sprachen):
 def download_pdf(n_clicks):
     pdf_path = os.path.join(os.getcwd(), "assets", "Lebenslauf.pdf")  # Absoluter Pfad
     return dcc.send_file(pdf_path)
+
+

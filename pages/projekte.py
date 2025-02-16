@@ -6,7 +6,7 @@ import webbrowser
 
 # Beispiel-Projektbeschreibung (Markdown Text Beispiel)
 Text = """
-# Planvalidierungstool
+# Automatisiertes Plandatenvalidierungstool
 
 Das Planvalidierungstool wurde entwickelt, um die vom Faserplaner erstellten Plandaten auf Konsistenzfehler zu überprüfen. Ziel war es, sicherzustellen, dass keine fehlerhaften Daten in die CM-Datenbank gelangen, und die Datenqualität innerhalb der Deutschen GigaNetz GmbH (DGN) zu erhöhen.
 
@@ -30,10 +30,10 @@ Ziel des Projekts war es, vorherzusagen, welche Kunden voraussichtlich ihre Vert
 
 ## Genutzte Daten
 
-#### Zielvariable (Label): 
+##### Zielvariable (Label): 
 - Auftragsstatus (Aktiv, Inaktiv)
 
-#### Features:
+##### Features:
 - **Personendaten**: Alter, Eigentümertyp (Eigentümer/Mieter)
 - **Gebäudedaten**: Anzahl der Wohneinheiten, Ort, Postleitzahl
 - **Technische Daten**: Vertragsdetails (z. B. GGNV), genutztes Produkt, Router-Typ
@@ -78,7 +78,7 @@ Die Lösung nutzt APIs zur News-Suche und ist vollständig automatisiert, wodurc
 """
 # Deine angepasste Projektliste
 projekte = [
-    {"id": 1, "Zeitraum": "02/2022 – 09/2024", "Titel": "Plandaten Validierungstoool",
+    {"id": 1, "Zeitraum": "02/2022 – 09/2024", "Titel": "Automatisiertes Plandatenvalidierungstool",
      "Rolle": "Die Entwicklung des Planvalidierungstool mit Dash-Python", "Software": "Python", 
      "Auftraggeber": "Unternehmensprojekt", "Arbeitgeber": "Deutsche Giganetz GmbH", 
      "Projektbeschreibung": Text},
@@ -136,7 +136,7 @@ def layout():
     return dbc.Row([
         dbc.Col([
             html.Br(),
-            html.H3("Meine Projekte", className="text-center"),
+            html.H3("Meine Projekte (Auswahl)", className="text-center"),
             html.Br(),
             #Das erste Projekt
             dbc.Accordion([

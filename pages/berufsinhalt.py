@@ -5,7 +5,7 @@ import dash_bootstrap_components as dbc
 berufserfahrung_inhalt = [
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('02/2022 - 09/2024', style={'textAlign': 'center'})
+            dcc.Markdown('**02/2022 - 09/2024**', style={'textAlign': 'center'})
         ], width=2),
         dbc.Col([
             dcc.Markdown('**IT Data Analyst**\n'
@@ -22,7 +22,7 @@ berufserfahrung_inhalt = [
 
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('06/2018 to 12/2021', style={'textAlign': 'center'})
+            dcc.Markdown('**06/2018 - 12/2021**', style={'textAlign': 'center'})
         ], width=2),
         dbc.Col([
             dcc.Markdown('**Data Analyst**\n'
@@ -38,7 +38,7 @@ berufserfahrung_inhalt = [
 
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('05/2020 to 08/2020', style={'textAlign': 'center'})
+            dcc.Markdown('**05/2020 - 08/2020**', style={'textAlign': 'center'})
         ], width=2),
         dbc.Col([
             dcc.Markdown('**Trainee Data Science (remote)**\n'
@@ -54,7 +54,7 @@ berufserfahrung_inhalt = [
 
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('07/2013 - 05/2018', style={'textAlign': 'center'})
+            dcc.Markdown('**07/2013 - 05/2018**', style={'textAlign': 'center'})
         ], width=2),
         dbc.Col([
             dcc.Markdown('**Wissenschaftlicher Mitarbeiter**\n'
@@ -71,7 +71,7 @@ berufserfahrung_inhalt = [
 
     dbc.Row([
         dbc.Col([
-            dcc.Markdown('01/2012 to 05/2013', style={'textAlign': 'center'})
+            dcc.Markdown('**01/2012 - 05/2013**', style={'textAlign': 'center'})
         ], width=2),
         dbc.Col([
             dcc.Markdown('**Mitarbeiter im Bereich der statistischen Datenanalyse und Prognose**\n'

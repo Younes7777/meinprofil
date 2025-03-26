@@ -46,7 +46,7 @@ layout = html.Div([
                 className="shadow border-0 p-3 mb-3 h-100 d-flex flex-column",
                 style={"maxWidth": "100%"},
             )
-        ], md=6, className="d-flex"),  # Spalte bleibt gleich hoch
+        ], md=8, className="d-flex"),  # Spalte bleibt gleich hoch
 
         # Rechte Spalte - Persönliche Infos Card
         dbc.Col([
@@ -63,7 +63,7 @@ layout = html.Div([
                 ]),
                 className="shadow border-0 p-3 d-flex flex-column h-100"
             )
-        ], md=6, className="d-flex")  # Stellt sicher, dass die Spalte sich dehnt
+        ], md=4, className="d-flex")  # Stellt sicher, dass die Spalte sich dehnt
 
     ], className="mt-5 justify-content-center align-items-stretch")  # Sorgt für gleiche Höhe der Cards  # Sorgt für gleiche Höhe der Cards
     ], style={"position": "relative"}),

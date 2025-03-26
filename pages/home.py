@@ -6,7 +6,7 @@ from .Studium import Studium
 from .Programmiersprachen import Programmiersprachen
 from .ML import ML
 from .azure import azure
-from .sprachen import sprachen
+from .sprachen import Power_BI
 import os
 dash.register_page(__name__, path='/', order=0)
 
@@ -23,11 +23,14 @@ layout = html.Div([
                     dbc.Col(
                         dbc.CardImg(
                             src="/assets/my.jpg",
-                            className="img-fluid rounded-start h-100",  # Höhe 100%
-                            style={"object-fit": "cover"}  # Passt das Bild perfekt an
+                            className="img-fluid rounded-start",
+                            style={"object-fit": "cover", "height": "100%", "width": "100%"}
                         ),
-                        className="col-md-4 h-100",
+                        className="col-md-4 d-flex align-items-stretch",
                     ),
+
+
+
                     # Rechte Spalte - Name & Profiltext
                     dbc.Col(
                         dbc.CardBody([
@@ -46,7 +49,7 @@ layout = html.Div([
                 className="shadow border-0 p-3 mb-3 h-100 d-flex flex-column",
                 style={"maxWidth": "100%"},
             )
-        ], md=8, className="d-flex"),  # Spalte bleibt gleich hoch
+        ], md=7, className="d-flex"),  # Spalte bleibt gleich hoch
 
         # Rechte Spalte - Persönliche Infos Card
         dbc.Col([
@@ -59,11 +62,11 @@ layout = html.Div([
                         html.Li(children=[html.Strong("✉️ E-Mail: "), "yiferd@yahoo.fr"]),
                         html.Li(children=[html.Strong("💼 GitHub: "), html.A("github.com/Younes7777", href="https://github.com/Younes7777", target="_blank")]),
                         
-                    ], className="list-unstyled fs-5")
+                    ], className="list-unstyled fs-6")
                 ]),
                 className="shadow border-0 p-3 d-flex flex-column h-100"
             )
-        ], md=4, className="d-flex")  # Stellt sicher, dass die Spalte sich dehnt
+        ], md=5, className="d-flex")  # Stellt sicher, dass die Spalte sich dehnt
 
     ], className="mt-5 justify-content-center align-items-stretch")  # Sorgt für gleiche Höhe der Cards  # Sorgt für gleiche Höhe der Cards
     ], style={"position": "relative"}),
@@ -88,7 +91,7 @@ layout = html.Div([
         dbc.Button("Programmiersprachen", id="btn-it", color="primary", className="flex-grow-1"),
         dbc.Button("Machine Learning", id="btn-ml", color="primary", className="flex-grow-1"),
         dbc.Button("Microsoft Azure", id="btn-azure", color="primary", className="flex-grow-1"),
-        dbc.Button("Sprachen", id="btn-sprachen", color="primary", className="flex-grow-1"),
+        dbc.Button("Power BI", id="btn-sprachen", color="primary", className="flex-grow-1"),
     ], style={"display": "flex", "width": "100%", "gap": "10px", "marginBottom": "20px"}),
 
     # Speicher für die Sichtbarkeit
@@ -130,7 +133,7 @@ def update_content(n_beruf, n_studium, n_it, n_ml, n_azure, n_sprachen):
         "btn-it": html.Div(Programmiersprachen, id="content-it", className="content-section"),
         "btn-ml": html.Div(ML, id="content-ml", className="content-section"),
         "btn-azure": html.Div(azure, id="content-azure", className="content-section"),
-        "btn-sprachen": html.Div(sprachen, id="content-sprachen", className="content-section")
+        "btn-sprachen": html.Div(Power_BI, id="content-sprachen", className="content-section")
     }
     
     return sections.get(button_id, "")

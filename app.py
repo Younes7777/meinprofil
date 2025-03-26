@@ -51,4 +51,4 @@ app.layout = dbc.Container([header, dash.page_container], fluid=True)
 
 # Starte den Server
 if __name__ == "__main__":
-    app.run_server(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))
+    app.run(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))

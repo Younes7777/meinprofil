@@ -2,6 +2,25 @@ from dash import dcc, html
 import dash_bootstrap_components as dbc
 
 berufserfahrung_inhalt = [
+
+    dbc.Row([
+        dbc.Col([
+            dcc.Markdown('**12/2024 - 03/2025**', style={'textAlign': 'center'})
+        ], width=2),
+        dbc.Col([
+            dcc.Markdown('**Weiterbildung zum Cloud Data Analyst (remote)**\n'
+                         'Brainymation AG, München',
+                         style={'white-space': 'pre'},
+                         className='ms-3'),
+            html.Ul([
+                html.Li('Moderne Data Analyse mit SQL-Server'),
+                html.Li('Power BI Basics und Advanced'),
+                html.Li('PL-300T00: Microsoft Power BI Data Analyst'),
+                html.Li('DP-900 Praxis: Microsoft Azure Data Fundamentals'),
+            ])
+        ], width=5)
+    ], justify='center'),
+
     dbc.Row([
         dbc.Col([
             dcc.Markdown('**02/2022 - 09/2024**', style={'textAlign': 'center'})

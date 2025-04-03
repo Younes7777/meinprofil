@@ -316,54 +316,63 @@ def toggle_markdown(n_open, n_close, is_open):
     return is_open
 ###################################################################################
 
-# das fünfte Projekt
+
+# Das fünfte Projekt
 @dash.callback(
-    Output("markdown-button5", "n_clicks"),
+    Output("markdown-button5", "children"),
     Input("markdown-button5", "n_clicks"),
     prevent_initial_call=True
 )
 def open_google(n_clicks):
-    webbrowser.open(next((projekt["Projektbeschreibung"] for projekt in projekte if projekt["id"] ==2), None))  # Öffnet die Seite im Standardbrowser
-    return 0  # Reset n_clicks, um mehrfaches Klicken zu ermöglichen
+    url = next((projekt["Projektbeschreibung"] for projekt in projekte if projekt["id"] == 2), None)
+    if n_clicks:
+        return html.A("Mehr erfahren", href=url, target="_blank")  # Link öffnet in neuem Tab
+    return "Mehr erfahren"
 
-
-# das 6. Projekt###########################################################
+# Das sechste Projekt
 @dash.callback(
-    Output("markdown-button6", "n_clicks"),
+    Output("markdown-button6", "children"),
     Input("markdown-button6", "n_clicks"),
     prevent_initial_call=True
 )
 def open_google(n_clicks):
-    webbrowser.open(next((projekt["Projektbeschreibung"] for projekt in projekte if projekt["id"] ==3), None))  # Öffnet die Seite im Standardbrowser
-    return 0  # Reset n_clicks, um mehrfaches Klicken zu ermöglichen
+    url = next((projekt["Projektbeschreibung"] for projekt in projekte if projekt["id"] == 3), None)
+    if n_clicks:
+        return html.A("Mehr erfahren", href=url, target="_blank")  # Link öffnet in neuem Tab
+    return "Mehr erfahren"
 
-
-# das 6. Projekt###########################################################
+# Das siebte Projekt
 @dash.callback(
-    Output("markdown-button7", "n_clicks"),
+    Output("markdown-button7", "children"),
     Input("markdown-button7", "n_clicks"),
     prevent_initial_call=True
 )
 def open_google(n_clicks):
-    webbrowser.open(next((projekt["Projektbeschreibung"] for projekt in projekte if projekt["id"] ==4), None))  # Öffnet die Seite im Standardbrowser
-    return 0  # Reset n_clicks, um mehrfaches Klicken zu ermöglichen
+    url = next((projekt["Projektbeschreibung"] for projekt in projekte if projekt["id"] == 4), None)
+    if n_clicks:
+        return html.A("Mehr erfahren", href=url, target="_blank")  # Link öffnet in neuem Tab
+    return "Mehr erfahren"
 
-# das 7. Projekt###########################################################
+# Das achte Projekt
 @dash.callback(
-    Output("markdown-button8", "n_clicks"),
+    Output("markdown-button8", "children"),
     Input("markdown-button8", "n_clicks"),
     prevent_initial_call=True
 )
 def open_google(n_clicks):
-    webbrowser.open(next((projekt["Projektbeschreibung"] for projekt in projekte if projekt["id"] ==5), None))  # Öffnet die Seite im Standardbrowser
-    return 0  # Reset n_clicks, um mehrfaches Klicken zu ermöglichen
+    url = next((projekt["Projektbeschreibung"] for projekt in projekte if projekt["id"] == 5), None)
+    if n_clicks:
+        return html.A("Mehr erfahren", href=url, target="_blank")  # Link öffnet in neuem Tab
+    return "Mehr erfahren"
 
-# das 8. Projekt###########################################################
+# Das neunte Projekt
 @dash.callback(
-    Output("markdown-button9", "n_clicks"),
+    Output("markdown-button9", "children"),
     Input("markdown-button9", "n_clicks"),
     prevent_initial_call=True
 )
 def open_google(n_clicks):
-    webbrowser.open(next((projekt["Projektbeschreibung"] for projekt in projekte if projekt["id"] ==7), None))  # Öffnet die Seite im Standardbrowser
-    return 0  # Reset n_clicks, um mehrfaches Klicken zu ermöglichen
+    url = next((projekt["Projektbeschreibung"] for projekt in projekte if projekt["id"] == 7), None)
+    if n_clicks:
+        return html.A("Mehr erfahren", href=url, target="_blank")  # Link öffnet in neuem Tab
+    return "Mehr erfahren"

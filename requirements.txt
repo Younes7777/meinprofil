@@ -2,3 +2,8 @@ dash
 pandas
 dash-bootstrap-components
 gunicorn
+psycopg2-binary
+geoip2
+python-dotenv
+flask
+pytz

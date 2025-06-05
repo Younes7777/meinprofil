@@ -2,73 +2,90 @@ import dash
 from dash import Dash, html
 import dash_bootstrap_components as dbc
 import os
-from flask import request, send_file
+from flask import request
+from dotenv import load_dotenv
+import psycopg2
+from psycopg2.extras import RealDictCursor
+import geoip2.database
 from datetime import datetime
-import csv
-import requests
+import pytz
 
-# Importiere das Passwort aus der externen Datei
-from password import LOG_DOWNLOAD_SECRET
+# .env laden (für DATABASE_URL)
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
+print(f"DEBUG: DATABASE_URL = {DATABASE_URL}")
 
-# Initialisiere die Dash-App
 app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.CERULEAN])
-server = app.server  # für Flask-Zugriff
+server = app.server
 
-# ---------------------
-# Besuchstracking-Teil
-# ---------------------
+# --- Datenbank-Funktionen ---
 
-def get_ip():
-    """Ermittelt die IP-Adresse des Besuchers"""
-    if request.headers.get('X-Forwarded-For'):
-        return request.headers.get('X-Forwarded-For').split(',')[0]
-    return request.remote_addr
+def get_db_connection():
+    conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+    return conn
 
-def get_city_from_ip(ip):
-    """Ermittelt die Stadt des Besuchers basierend auf der IP-Adresse"""
+def create_table():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS visitors (
+            id SERIAL PRIMARY KEY,
+            ip VARCHAR(45),
+            city VARCHAR(100),
+            country VARCHAR(100),
+            visit_time TIMESTAMP
+        )
+    """)
+    conn.commit()
+    cur.close()
+    conn.close()
+
+create_table()
+
+# GeoIP2 Reader initialisieren (Datei im Repo)
+GEOIP_DB_PATH = 'GeoLite2-City.mmdb'
+reader = geoip2.database.Reader(GEOIP_DB_PATH)
+
+def log_visitor(ip):
     try:
-        res = requests.get(f"http://ip-api.com/json/{ip}").json()
-        return res.get("city", "Unbekannt")
-    except:
-        return "Unbekannt"
+        response = reader.city(ip)
+        city = response.city.name or "Unknown"
+        country = response.country.name or "Unknown"
+    except Exception as e:
+        print(f"GeoIP Lookup Fehler: {e}")
+        city = "Unknown"
+        country = "Unknown"
 
-def log_visit(ip, city):
-    """Loggt den Besuch in einer CSV-Datei mit Zeitstempel"""
-    timestamp = datetime.now().isoformat()  # Holt den aktuellen Zeitstempel
-    with open("visits.csv", "a", newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow([timestamp, ip, city])  # Zeitstempel, IP und Stadt
+    def get_berlin_time():
+        tz = pytz.timezone('Europe/Berlin')
+        utc_now = datetime.utcnow()
+        utc_now = pytz.utc.localize(utc_now)
+        berlin_time = utc_now.astimezone(tz)
+        return berlin_time
 
+    visit_time = get_berlin_time()
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        INSERT INTO visitors (ip, city, country, visit_time)
+        VALUES (%s, %s, %s, %s)
+    """, (ip, city, country, visit_time))
+    conn.commit()
+    cur.close()
+    conn.close()
+
+# Flask before_request Hook für Besucher-Logging
 @server.before_request
-def track_visits():
-    """Verfolgt jeden Besuch und loggt die IP und Stadt"""
-    if request.path.startswith("/_") or "download-log" in request.path:
-        return
-    ip = get_ip()
-    city = get_city_from_ip(ip)
-    log_visit(ip, city)
+def before_request_logging():
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    if ip:
+        log_visitor(ip)
 
-# Route zum Herunterladen der Logdatei
-@server.route("/download-log")
-def download_log():
-    """Lädt die Logdatei herunter, wenn das Secret korrekt ist"""
-    secret = request.args.get("secret")
-    if secret != LOG_DOWNLOAD_SECRET:
-        return "Zugriff verweigert", 403
+# --- Dein Original-Code ---
 
-    if not os.path.exists("visits.csv"):
-        return "Noch keine Daten vorhanden", 404
-
-    return send_file("visits.csv", mimetype="text/csv", as_attachment=True)
-
-# ---------------------
-# Layout der Anwendung
-# ---------------------
-
-# Importiere Seiten (z.B. Projekte-Seite)
 from pages import projekte
 
-# Header-Menü
 header = dbc.Navbar(
     dbc.Container(
         [
@@ -105,9 +122,7 @@ header = dbc.Navbar(
     style={"marginBottom": "10px"}
 )
 
-# Hauptlayout
 app.layout = dbc.Container([header, dash.page_container], fluid=True)
 
-# Starte den Server
 if __name__ == "__main__":
     app.run(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))

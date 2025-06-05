@@ -1,2 +1,6 @@
 visits.csv
 password.py
+.env
+test_logging_local.py
+__pycache__/
+*.pyc

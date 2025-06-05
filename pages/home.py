@@ -35,14 +35,10 @@ layout = html.Div([
                     dbc.Col(
                         dbc.CardBody([
                             html.H4("Younes Iferd", className="card-title text-primary fw-bold"),
-                            html.P(
-                                "Leidenschaftlicher Data Analyst mit umfassender Erfahrung in der statistischen und ökonometrischen "
-                                "Datenanalyse. Versiert in Python, R, SQL und Machine Learning. Spezialisiert auf die Entwicklung interaktiver "
-                                "Dashboards (Dash, Shiny) und datengetriebene Entscheidungsfindung. Die Weiterbildung zum Cloud Data Analyst habe ich neulich "
-                                "erfolgreich abgeschlossen, wobei Power BI einen zentralen Bestandteil ausmacht. Aktuell in der Vorbereitung auf die PL-300-Zertifizierungsprüfung "
-                                "von Microsoft. Teamorientiert mit Erfahrung in IT- und Telekommunikationsbranchen.",
-                                className="card-text"
-                            )
+                            dcc.Markdown("""
+                                Data Analyst mit starkem technischen Profil und Schnittstelle zur Data Science, erfahrener Entwickler interaktiver Analyse-Tools mit Dash und Shiny, versiert in Python, R, SQL und Power BI. Spezialisiert auf datengetriebene Entscheidungsprozesse, statistische Modellierung und maschinelles Lernen. **Microsoft-zertifiziert (PL-300) für Power BI seit Mai 2025** mit breiter Erfahrung in der Datenvisualisierung und Analyse in IT- und Telekommunikationsumfeldern.
+                                """, className="card-text")
+
                         ]),
                         className="col-md-8",
                     ),

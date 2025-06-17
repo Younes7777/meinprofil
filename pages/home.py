@@ -36,7 +36,7 @@ layout = html.Div([
                         dbc.CardBody([
                             html.H4("Younes Iferd", className="card-title text-primary fw-bold"),
                             dcc.Markdown("""
-                                Data Analyst mit starkem technischen Profil und Schnittstelle zur Data Science, erfahrener Entwickler interaktiver Analyse-Tools mit Dash und Shiny, versiert in Python, R, SQL und Power BI. Spezialisiert auf datengetriebene Entscheidungsprozesse, statistische Modellierung und maschinelles Lernen. **Microsoft-zertifiziert (PL-300) für Power BI seit Mai 2025** mit breiter Erfahrung in der Datenvisualisierung und Analyse in IT- und Telekommunikationsumfeldern.
+                                Data Analyst mit starkem technischen Profil und Schnittstelle zur Data Science, erfahrener Entwickler interaktiver Analyse-Tools mit Dash und Shiny, versiert in Python, R, SQL und Power BI. Spezialisiert auf datengetriebene Entscheidungsprozesse, statistische Modellierung und maschinelles Lernen. **[Microsoft-zertifiziert (PL-300) für Power BI](https://learn.microsoft.com/de-de/users/younesiferd-0377/credentials/9a7ba5d1effd1c0e)** seit Mai 2025 mit breiter Erfahrung in der Datenvisualisierung und Analyse in IT- und Telekommunikationsumfeldern.
                                 """, className="card-text")
 
                         ]),

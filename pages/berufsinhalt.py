@@ -15,7 +15,17 @@ berufserfahrung_inhalt = [
             html.Ul([
                 html.Li('Moderne Data Analyse mit SQL-Server'),
                 html.Li('Power BI Basics und Advanced'),
-                html.Li('PL-300T00: Microsoft Power BI Data Analyst'),
+                html.Li('PL-300T00: Microsoft Power BI Data Analyst (Kurs)'),
+                html.Li([
+                    "Microsoft Certified: ",
+                    html.A(
+                        "Power BI Data Analyst Associate (PL-300)",
+                        href="https://learn.microsoft.com/de-de/users/younesiferd-0377/credentials/9a7ba5d1effd1c0e",
+                        target="_blank",
+                        className="text-decoration-underline"
+                    ),
+                    ", Mai 2025"
+                ]),
                 html.Li('DP-900 Praxis: Microsoft Azure Data Fundamentals'),
             ])
         ], width=5)

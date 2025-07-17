@@ -4,3 +4,4 @@ password.py
 test_logging_local.py
 __pycache__/
 *.pyc
+database.ipynb
